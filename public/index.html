@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>My App</title>
+  <!-- stylesheets -->
+  <link rel="stylesheet" href="index.css">
+  <!-- javascripts -->
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
@@ -21,10 +24,12 @@
   <div class="vue-component">
 	
 		<h1>Tasks</h1>
+    <p>{{ numIncompleteTasks }} tasks left.</p>
     <ul>
-    	<li v-for="task in tasks" v-on:click="completeTask(task)">{{ task.text }}</li>
+    	<li v-for="task in tasks" v-on:click="completeTask(task)" v-bind:class="{strike: task.completed}">{{ task.text }}</li>
     </ul>
-    <!-- <input v-model="tasks[2].text"> -->
+
+    <button v-on:click="removeCompletedTasks()">Remove completed tasks</button>
 
 		<h3>New Task</h3>
     <div>
@@ -36,3 +41,5 @@
 
   </div>
 </template>
+
+

@@ -37,13 +37,33 @@ var HomePage = {
       }
     },
     completeTask: function(currentTask) {
-      // when a task is clicked on, find the index of that task and remove that index from the tasks array
-      var taskIndex = this.tasks.indexOf(currentTask);
-      this.tasks.splice(taskIndex, 1);
+      currentTask.completed = !currentTask.completed
+    },
+    removeCompletedTasks: function() {
+      // create a new array of incomplete tasks and use that array
+      var incompleteTasks = [];
+      this.tasks.forEach(function(task){
+        if(!task.completed){
+          incompleteTasks.push(task);
+        }
+      });
+      this.tasks = incompleteTasks;
     }
   },
-  computed: {}
+  computed: {
+    numIncompleteTasks: function() {
+      // look at the tasks array and count how many of the tasks have completed:false
+      var count = 0;
+      this.tasks.forEach(function(task){
+        if(!task.completed){
+          count++;
+        }
+      });
+      return count;
+    }
+  }
 };
+
 
 var router = new VueRouter({
   routes: [{ path: "/", component: HomePage }],
@@ -56,3 +76,12 @@ var app = new Vue({
   el: "#vue-app",
   router: router
 });
+
+
+
+
+
+
+
+
+
