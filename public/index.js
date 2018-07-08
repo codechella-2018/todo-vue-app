@@ -4,37 +4,25 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      tasks: [
-        {
-          id: 1,
-          text: "Brush the cat",
-          completed: false
-        },
-        {
-          id: 2,
-          text: "Feed the cat",
-          completed: false
-        },
-        {
-          id: 3,
-          text: "Water the cat",
-          completed: false
-        }
-      ],
+      tasks: [],
       newTask: {}
     };
   },
-  created: function() {},
+  created: function() {
+    axios.get("/api/tasks.json").then(function(response) {
+      this.tasks = response.data;
+      console.log(this.tasks);
+    }.bind(this));
+  },
   methods: {
     addTask: function() {
-      if (this.newTask.text) {
-        var newTaskInfo = {
-          text: this.newTask.text,
-          completed: false
-        };
-        this.tasks.push(newTaskInfo);
-        this.newTask = {};
+      var clientParams = {
+        text: this.newTask.text,
       }
+      axios.post("/api/tasks", clientParams).then(function(response){
+        this.tasks.push(response.data);
+        this.newTask.text = "";
+      }.bind(this));
     },
     completeTask: function(currentTask) {
       currentTask.completed = !currentTask.completed
