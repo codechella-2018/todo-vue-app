@@ -36,6 +36,12 @@ var HomePage = {
         }
       });
       this.tasks = incompleteTasks;
+    },
+    deleteTask: function(task) {
+      axios.delete("/api/tasks/" + task.id).then(function(response){
+        var index = this.tasks.indexOf(task);
+        this.tasks.splice(index, 1);
+      }.bind(this));
     }
   },
   computed: {
