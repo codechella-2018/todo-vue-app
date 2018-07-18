@@ -1,3 +1,6 @@
 .strike {
 	text-decoration: line-through;
 }
+#map {
+  height: 500px;
+}
